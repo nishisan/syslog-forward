@@ -22,6 +22,13 @@ struct tcphdr {
 typedef struct tcphdr tcphdr;
 typedef struct tcphdr udphdr;
 
+
+struct socketSender{
+  int socket_type;
+  struct sockaddr_in socket;
+};
+
+typedef struct socketSender socketSender;
 /* Pretty printing IP addresses */
 #define _XIP(a,n) (int)(((a)>>(n))&0xFF)
 #define P_IP_ADDR(a) _XIP(a,24), _XIP(a,16), _XIP(a,8), _XIP(a,0)
@@ -45,4 +52,3 @@ typedef struct tcphdr udphdr;
 #define TCP_FIN             1
 #define TCP_SYN             2
 #define TCP_RST             4
-
