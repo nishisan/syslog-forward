@@ -1,8 +1,13 @@
 AM_CFLAGS = 
-AM_LDFLAGS = -lpcap -lconfig
+AM_LDFLAGS = -lpcap 
+ACLOCAL_AMFLAGS = -I m4 -Ilib
 
-bin_PROGRAMS = server
+bin_PROGRAMS = syslog-forward 
+
+syslog_forward_SOURCES = server.c configuration.c 
 
 
-server_SOURCES = server.c configuration.c 
-include_HEADERS = common/default.h common/configuration.h
+#include_HEADERS = common/default.h common/configuration.h
+LDADD = -L../lib/libconfig -lconfig
+INCLUDES = -I$(top_builddir)/lib/libconfig
+
