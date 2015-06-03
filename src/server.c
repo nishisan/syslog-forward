@@ -51,7 +51,7 @@ void forwarder(u_char *args,const struct pcap_pkthdr* framehdr,const u_char* buf
    tcp.src = TCP_SRC(buf,tcp.offset);
    tcp.data_offset = tcp.offset + 8;
    sendto(sender->socket_type, buf,  ip.max_offset, 0, (struct sockaddr *)&sender->socket, sizeof(sender->socket));
-   printf("Sent packet with size: %d\n", ip.max_offset);
+   //printf("Sent packet with size: %d\n", ip.max_offset);
 }
 /**
  * Start the capture session and call forward
@@ -146,7 +146,36 @@ socketSender* initTargetSocket(config_t cfg){
  * Cool stuff happend from here xD
  */
 int main(int argc,char * argv[]){
+
+  pid_t process_id = 0;
+  pid_t sid = 0;
   config_t cfg;
+  
+  // Create child process
+  process_id = fork();
+  // Indication of fork() failure
+  if (process_id < 0)
+  {
+  printf("fork failed!\n");
+  // Return failure in exit status
+  exit(1);
+  }
+  // PARENT PROCESS. Need to kill it.
+  if (process_id > 0)
+  {
+  printf("process_id of child process %d \n", process_id);
+  // return success in exit status
+  exit(0);
+  } 
+
+  //set new session
+  sid = setsid();
+  if(sid < 0)
+  {
+  // Return failure
+  exit(1);
+  }
+  
   cfg = *loadConfiguration();
   initCaptureFilter(cfg);
   closeConfig(cfg);
