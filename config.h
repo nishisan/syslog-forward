@@ -14,7 +14,7 @@
 #define HAVE_INTTYPES_H 1
 
 /* Define to 1 if you have the <libconfig.h> header file. */
-/* #undef HAVE_LIBCONFIG_H */
+#define HAVE_LIBCONFIG_H 1
 
 /* Define to 1 if you have the <memory.h> header file. */
 #define HAVE_MEMORY_H 1

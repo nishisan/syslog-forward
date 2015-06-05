@@ -5,8 +5,10 @@ AC_PREREQ([2.63])
 AC_INIT([syslog-forward], [0.1],[lucas.nishimura@gmail.com])
 AM_INIT_AUTOMAKE(syslog-forward, 0.1)
 AC_CONFIG_SRCDIR([src/server.c])
-AC_CONFIG_HEADERS([config.h lib/libconfig/ac_config.h])
+AC_CONFIG_HEADERS([config.h src/libconfig/ac_config.h])
 
+AC_CONFIG_MACRO_DIR([m4])
+#LT_INIT([disable-shared])
 AH_TEMPLATE(_GNU_SOURCE)
 AC_DEFINE(_GNU_SOURCE)
 
@@ -89,12 +91,4 @@ AM_CONDITIONAL(GNU_WIN, test x$gnuwin = xyes)
 
 
 # Checks for library functions.
-
-AC_OUTPUT(
-          Makefile 
-          src/Makefile
-          lib/Makefile
-          lib/libconfig/Makefile 
-          lib/libconfig/libconfig.pc
-          lib/libconfig/libconfig++.pc
-          )
+AC_OUTPUT([Makefile src/Makefile lib/Makefile  src/libconfig/Makefile ])

@@ -7,7 +7,7 @@
 #include <arpa/inet.h>
 #include <netinet/if_ether.h>
 #include <unistd.h>
-#include <libconfig.h>
+#include "libconfig/libconfig.h"
 #include "common/default.h"
 #include "common/configuration.h"
 

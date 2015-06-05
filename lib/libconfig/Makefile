@@ -42,8 +42,7 @@ am__append_3 = $(libinc_cpp)
 am__append_4 = libconfig++.pc
 subdir = lib/libconfig
 DIST_COMMON = README $(am__include_HEADERS_DIST) $(srcdir)/Makefile.am \
-	$(srcdir)/Makefile.in $(srcdir)/ac_config.h.in \
-	$(srcdir)/libconfig++.pc.in $(srcdir)/libconfig.pc.in AUTHORS \
+	$(srcdir)/Makefile.in $(srcdir)/ac_config.h.in AUTHORS \
 	COPYING.LIB ChangeLog INSTALL NEWS TODO compile config.guess \
 	config.sub depcomp grammar.c grammar.h install-sh ltmain.sh \
 	missing mkinstalldirs scanner.c ylwrap
@@ -53,7 +52,7 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h ac_config.h
-CONFIG_CLEAN_FILES = libconfig.pc libconfig++.pc
+CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
@@ -213,7 +212,7 @@ LEX = flex
 LEXLIB = 
 LEX_OUTPUT_ROOT = lex.yy
 LIBOBJS = 
-LIBS = -lpcap 
+LIBS = -lconfig -lpcap 
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = 
 LN_S = ln -s
@@ -372,9 +371,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign lib/libconfig/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu lib/libconfig/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign lib/libconfig/Makefile
+	  $(AUTOMAKE) --gnu lib/libconfig/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -410,10 +409,6 @@ $(srcdir)/ac_config.h.in:  $(am__configure_deps)
 
 distclean-hdr:
 	-rm -f ac_config.h stamp-h2
-libconfig.pc: $(top_builddir)/config.status $(srcdir)/libconfig.pc.in
-	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-libconfig++.pc: $(top_builddir)/config.status $(srcdir)/libconfig++.pc.in
-	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 install-libLTLIBRARIES: $(lib_LTLIBRARIES)
 	@$(NORMAL_INSTALL)
 	test -z "$(libdir)" || $(MKDIR_P) "$(DESTDIR)$(libdir)"
@@ -938,26 +933,6 @@ uninstall-am: uninstall-includeHEADERS uninstall-libLTLIBRARIES \
 	uninstall-includeHEADERS uninstall-libLTLIBRARIES \
 	uninstall-pkgconfigDATA
 
-
-.PHONY: dist-rpm
-
-dist-rpm: distcheck
-	rpmbuild -ta $(distdir).tar.gz
-
-msvc7:
-	find . -name '*\.vcproj' | grep -v '7' \
-	| while read x; do \
-		d=`dirname $$x`; \
-		y=`basename $$x .vcproj`-msvc7.vcproj; \
-		rm -f $$d/$$y; \
-		perl -p -e 's/Version="8.00"/Version="7.10"/g' < $$x > $$d/$$y; \
-	done; \
-	rm -f libconfig-msvc7.sln libconfig-msvc7.sln.tmp; \
-	perl -p -e 's/Version 9.00/Version 8.00/g' < libconfig.sln \
-		> libconfig-msvc7.sln.tmp; \
-	perl -p -e 's/\.vcproj/-msvc7.vcproj/g' \
-		< libconfig-msvc7.sln.tmp > libconfig-msvc7.sln; \
-	rm -f libconfig-msvc7.sln.tmp
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
